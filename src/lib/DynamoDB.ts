@@ -1,8 +1,9 @@
 import * as AWS from 'aws-sdk';
-import { APIGatewayEvent } from 'aws-lambda';
+import { ServerlessAPIGatewayEvent } from 'aws-lambda';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
 export default class DynamoDB {
-  static client(event: APIGatewayEvent): void {
+  static client(event: ServerlessAPIGatewayEvent): DocumentClient {
     if (event.isOffline) {
       return new AWS.DynamoDB.DocumentClient({
         region: 'localhost',
