@@ -41,11 +41,18 @@ custom:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/functions/handler.hello
     events:
       - http:
           method: get
           path: hello
+  putToSqs:
+    handler: src/functions/handler.putToSQS
+    events:
+      - http:
+          path: /put-to-sqs
+          method: POST
+          cors: true
 
 resources:
   Resources:

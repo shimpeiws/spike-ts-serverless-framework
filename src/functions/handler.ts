@@ -14,3 +14,18 @@ export const hello: Handler = async (
   };
   callback(null, response);
 };
+
+export const putToSqs: Handler = async (
+  event: APIGatewayEvent,
+  _context: Context,
+  callback: Callback
+) => {
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: 'Put To Sqs!',
+      input: event
+    })
+  };
+  callback(null, response);
+};
