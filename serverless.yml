@@ -47,7 +47,7 @@ functions:
           method: get
           path: hello
   putToSqs:
-    handler: src/functions/handler.putToSQS
+    handler: src/functions/putToSqs.index
     events:
       - http:
           path: /put-to-sqs

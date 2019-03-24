@@ -1,18 +1,18 @@
-import SQS as AWS from 'aws-sdk/clients/sqs';
+import { SQS as AwsSqs, SQSExtended } from 'aws-sdk';
 import { ServerlessAPIGatewayEvent } from 'aws-lambda';
-import { SQS } from 'aws-sdk';
 
 export default class SQS {
   static get LOCAL_ENDPOINT() {
     return 'http://localhost:9324';
   }
-  static localClient(): SQS {
-    const sqs = new SQS({
+  static localClient(): AwsSqs {
+    const sqs = new AwsSqs({
       apiVersion: '2012-11-05',
       region: 'localhost'
     });
-    sqs.setEndpoint(this.LOCAL_ENDPOINT);
-    return sqs;
+    const sqsExtended: SQSExtended = <SQSExtended>sqs;
+    sqsExtended.setEndpoint(this.LOCAL_ENDPOINT);
+    return sqsExtended;
   }
   static queueUrl(queueName: String, event: ServerlessAPIGatewayEvent) {
     if (event.isOffline) {
@@ -20,10 +20,10 @@ export default class SQS {
     }
     return `${process.env.SQS_BASE_URL}/${queueName}`;
   }
-  static client(event: ServerlessAPIGatewayEvent): SQS {
+  static client(event: ServerlessAPIGatewayEvent): AwsSqs {
     if (event.isOffline) {
       return this.localClient();
     }
-    return new SQS({ apiVersion: '2012-11-05' });;
+    return new AwsSqs({ apiVersion: '2012-11-05' });
   }
 }
