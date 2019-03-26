@@ -21,10 +21,27 @@
   dependencies:
     axios "*"
 
+"@types/chai-spies@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/chai-spies/-/chai-spies-1.0.0.tgz#1442daa924d2a8c3f20253db5e5e8fdd1fd4f229"
+  integrity sha512-Bj/froHomMnlAPEYEeqhmSuNSjTWW/VuSvCVdhLdcb67+dy4ffjTR6fC0YYw9tHP6KR3U8fkF1mgzmzlChHc5Q==
+  dependencies:
+    "@types/chai" "*"
+
+"@types/chai@*":
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.7.tgz#1b8e33b61a8c09cbe1f85133071baa0dbf9fa71a"
+  integrity sha512-2Y8uPt0/jwjhQ6EiluT0XCri1Dbplr0ZxfFXUz+ye13gaqE8u5gL5ppao1JrUYr9cIip5S6MvQzBS7Kke7U9VA==
+
 "@types/node@*":
   version "11.11.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.6.tgz#df929d1bb2eee5afdda598a41930fe50b43eaa6a"
   integrity sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==
+
+"@types/node@^11.11.3":
+  version "11.12.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.12.0.tgz#ec5594728811dc2797e42396cfcdf786f2052c12"
+  integrity sha512-Lg00egj78gM+4aE0Erw05cuDbvX9sLJbaaPwwRtdCdAMnIudqrQZ0oZX98Ek0yiSK/A2nubHgJfvII/rTT2Dwg==
 
 "@types/node@^8.0.57":
   version "8.10.40"
@@ -387,6 +404,21 @@ aws-sdk@*, aws-sdk@^2.409.0, aws-sdk@^2.7.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
+aws-sdk@^2.177.0:
+  version "2.429.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.429.0.tgz#27c32734f6473f69a39c29a694d54d15b5beb68a"
+  integrity sha512-8RmRyCXYjDC15BQlkkgT5Yqs8GAdPmjaLRP03Lc6kqaKuMMIi4EnNIlXDKi9kwj3zl2AXfm0GE5blcE0+ZfaxQ==
+  dependencies:
+    buffer "4.9.1"
+    events "1.1.1"
+    ieee754 "1.1.8"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.3.2"
+    xml2js "0.4.19"
+
 axios@*, axios@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
@@ -689,7 +721,7 @@ catbox@7.x.x:
     hoek "4.x.x"
     joi "10.x.x"
 
-chalk@^2.0.0, chalk@^2.3.0:
+chalk@^2.0.0, chalk@^2.3.0, chalk@^2.4.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -2702,6 +2734,16 @@ serialize-javascript@^1.4.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.6.1.tgz#4d1f697ec49429a847ca6f442a2a755126c4d879"
   integrity sha512-A5MOagrPFga4YaKQSWHryl7AXvbQkEqpw4NNYMTNYUNV51bA8ABHgYFpqKx+YFFrw59xMV1qGH1R4AgoNIVgCw==
+
+serverless-domain-manager@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/serverless-domain-manager/-/serverless-domain-manager-3.2.1.tgz#bc847d3f0f25f2957f457873bf5ddc6c56494c9d"
+  integrity sha512-vn/MLRoUDjAlqxDBCgtzqYBfE8ykxyLj3Mjpy18sfkprgfE8TXIwpzz6Pnxl6IEqjyewnhCC/IA2Z8IVLypYZQ==
+  dependencies:
+    "@types/chai-spies" "^1.0.0"
+    "@types/node" "^11.11.3"
+    aws-sdk "^2.177.0"
+    chalk "^2.4.1"
 
 serverless-dynamodb-local@^0.2.36:
   version "0.2.36"

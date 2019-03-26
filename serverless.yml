@@ -27,6 +27,7 @@ plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-dynamodb-local
+  - serverless-domain-manager
 
 custom:
   dynamodb:
@@ -40,6 +41,13 @@ custom:
       migrate: true
       seed: true
       convertEmptyValues: true
+  customDomain:
+    domainName: ${self:provider.stage}-spike-ts-serverless.${env:CUSTOM_DOMAIN_NAME}
+    certificateName: ${env:CERTIFICATE_NAME}
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    endpointType: 'regional'
 
 functions:
   hello:

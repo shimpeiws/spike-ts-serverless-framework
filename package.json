@@ -17,6 +17,7 @@
     "@types/axios": "^0.14.0",
     "@types/node": "^8.0.57",
     "@types/uuid": "^3.4.4",
+    "serverless-domain-manager": "^3.2.1",
     "serverless-dynamodb-local": "^0.2.36",
     "serverless-offline": "^4.6.0",
     "serverless-webpack": "^5.1.1",
