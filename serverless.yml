@@ -41,7 +41,7 @@ custom:
 
 functions:
   hello:
-    handler: src/functions/handler.hello
+    handler: src/functions/hello.index
     events:
       - http:
           method: get

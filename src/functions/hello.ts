@@ -1,6 +1,6 @@
 import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
 
-export const hello: Handler = async (
+export const index: Handler = async (
   event: APIGatewayEvent,
   _context: Context,
   callback: Callback
@@ -9,21 +9,6 @@ export const hello: Handler = async (
     statusCode: 200,
     body: JSON.stringify({
       message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-      input: event
-    })
-  };
-  callback(null, response);
-};
-
-export const putToSqs: Handler = async (
-  event: APIGatewayEvent,
-  _context: Context,
-  callback: Callback
-) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Put To Sqs!',
       input: event
     })
   };
