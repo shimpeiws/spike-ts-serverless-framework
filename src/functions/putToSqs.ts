@@ -7,14 +7,13 @@ export const index: Handler = async (
   _context: Context,
   callback: Callback
 ) => {
-  const client = SQS.client(event);
   const queueName = process.env.TEST_QUEUE_NAME;
-  await client.createQueue({ QueueName: queueName }, () => {}).promise();
+  await SQS.createQueue(queueName, event);
+  await SQS.sendMessage(queueName, JSON.parse(event.body).message, event);
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: 'Put To Sqs!',
-      input: event
+      message: 'Put To Sqs Success!'
     })
   };
   callback(null, response);

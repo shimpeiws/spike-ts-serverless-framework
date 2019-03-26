@@ -26,4 +26,23 @@ export default class SQS {
     }
     return new AwsSqs({ apiVersion: '2012-11-05' });
   }
+  static createQueue(
+    queueName: string,
+    event: ServerlessAPIGatewayEvent
+  ): Promise<AwsSqs.CreateQueueResult> {
+    const client = this.client(event);
+    return client.createQueue({ QueueName: queueName }).promise();
+  }
+  static sendMessage(
+    queueName: string,
+    messageBody: string,
+    event: ServerlessAPIGatewayEvent
+  ): Promise<AwsSqs.SendMessageResult> {
+    const client = this.client(event);
+    const params = {
+      QueueUrl: this.queueUrl(queueName, event),
+      MessageBody: messageBody
+    };
+    return client.sendMessage(params).promise();
+  }
 }
