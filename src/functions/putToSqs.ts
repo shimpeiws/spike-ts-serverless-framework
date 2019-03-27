@@ -1,6 +1,5 @@
-import { Callback, Context, Handler } from 'aws-lambda';
+import { Callback, Context, Handler, ServerlessAPIGatewayEvent } from 'aws-lambda';
 import SQS from '../lib/SQS';
-import { ServerlessAPIGatewayEvent } from 'aws-lambda';
 
 export const index: Handler = async (
   event: ServerlessAPIGatewayEvent,
@@ -8,8 +7,8 @@ export const index: Handler = async (
   callback: Callback
 ) => {
   const queueName = process.env.TEST_QUEUE_NAME;
-  await SQS.createQueue(queueName, event);
-  await SQS.sendMessage(queueName, JSON.parse(event.body).message, event);
+  await SQS.createQueue(queueName, event.isOffline);
+  await SQS.sendMessage(queueName, JSON.parse(event.body).message, event.isOffline);
   const response = {
     statusCode: 200,
     body: JSON.stringify({

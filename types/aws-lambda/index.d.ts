@@ -5,3 +5,8 @@ declare module 'aws-lambda' {
     isOffline: boolean;
   }
 }
+declare module 'aws-lambda' {
+  interface ServelessSQSEvent extends SQSEvent {
+    isOffline: boolean;
+  }
+}
