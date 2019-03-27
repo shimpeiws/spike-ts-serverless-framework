@@ -17,7 +17,14 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/*-${self:provider.stage}'
+    - Effect: Allow
+      Action:
+        - 'sqs:SendMessage'
+        - 'sqs:GetQueueUrl'
+        - 'sqs:CreateQueue'
+      Resource: 'arn:aws:sqs:${self:provider.region}:*:*-${self:provider.stage}'
   environment:
+    SQS_BASE_URL: ${env:SQS_BASE_URL}
     TEST_QUEUE_NAME: ${self:service}-${self:provider.stage}
     IMAGES_DYNAMODB_TABLE: images-${self:service}-${self:provider.stage}
     PIXABAY_API_KEY: ${env:PIXABAY_API_KEY}
