@@ -1,10 +1,9 @@
 import { v1 } from 'uuid';
-import { ServerlessAPIGatewayEvent } from 'aws-lambda';
 import axios from 'axios';
 import DynamoDB from '../lib/DynamoDB';
 
 export default class SearchPixabay {
-  static async search(query: String, event: ServerlessAPIGatewayEvent) {
+  static async search(query: String, isOffline: boolean = false) {
     const client = axios.create({
       baseURL: 'https://pixabay.com/api',
       headers: {
@@ -25,7 +24,7 @@ export default class SearchPixabay {
     const sliced = res.data.hits.slice(0, 9);
     const urls = sliced.map(obj => obj.webformatURL);
 
-    const dynamo = DynamoDB.client(event);
+    const dynamo = DynamoDB.client(isOffline);
     const timestamp = new Date().getTime();
     const params = {
       TableName: process.env.IMAGES_DYNAMODB_TABLE,
