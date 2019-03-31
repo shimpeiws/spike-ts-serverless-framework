@@ -92,7 +92,7 @@ functions:
       - websocket:
           routeKey: $disconnect
   websocketDefaultHandler:
-    handler: src/functions/websocket/connectionManager.default
+    handler: src/functions/websocket/defaultHandler.index
     events:
       - websocket:
           routeKey: $default

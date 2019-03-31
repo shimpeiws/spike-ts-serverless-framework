@@ -26,17 +26,3 @@ export const index: Handler = async (
     callback(null, { statusCode: 200, body: JSON.stringify({ message: 'disconnected' }) });
   }
 };
-
-// export const default: Handler = async (
-//   event: ServerlessAPIGatewayEvent,
-//   _context: Context,
-//   callback: Callback
-// ) => {
-//   const params = {
-//     ConnectionId: event.requestContext.connectionId,
-//     Data: 'Error: Invalid action type'
-//   };
-//   const client = ApiGateway.client();
-//   await apiGateway.postToConnection(params).promise();
-//   callback(null, { statusCode: 500, body: JSON.stringify({ message: 'invalid message' }) });
-// }
