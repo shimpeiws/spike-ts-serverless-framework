@@ -10,27 +10,33 @@ export const index: Handler = async (
   _context: Context,
   callback: Callback
 ) => {
-  const apiGateway = ApiGateway.client();
+  const apiGateway = ApiGateway.client(event.requestContext);
   const dynamo = DynamoDB.client(event.isOffline);
+  const imageParams: DocumentClient.ScanInput = {
+    TableName: process.env.IMAGES_DYNAMODB_TABLE
+  };
+  const images = await dynamo.scan(imageParams).promise();
+  let resObj: ApiGatewayManagementApi.Data = {};
+  images.Items.map(item => {
+    resObj[item.query] = item.urls;
+  });
   const scanParams: DocumentClient.ScanInput = {
     TableName: process.env.CONNECTIONS_DYNAMODB_TABLE,
     ProjectionExpression: 'ConnectionId'
   };
   const socketClients = await dynamo.scan(scanParams).promise();
   socketClients.Items.map(async ({ ConnectionId }) => {
-    const imageParams: DocumentClient.ScanInput = {
-      TableName: process.env.IMAGES_DYNAMODB_TABLE
-    };
-    const images = await dynamo.scan(imageParams).promise();
-    let resObj = {};
-    images.Items.map(item => {
-      resObj[item.query] = item.urls;
-    });
+    console.info('ConnectionId', ConnectionId);
+    console.info('Data', JSON.stringify(resObj));
     const request: ApiGatewayManagementApi.PostToConnectionRequest = {
       ConnectionId: ConnectionId,
       Data: JSON.stringify(resObj)
     };
-    await apiGateway.postToConnection(request).promise();
+    try {
+      await apiGateway.postToConnection(request).promise();
+    } catch (e) {
+      console.info('ERROR', e);
+    }
   });
   const response = {
     statusCode: 200,
