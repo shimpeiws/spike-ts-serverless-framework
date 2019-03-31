@@ -9,6 +9,11 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - execute-api:ManageConnections
+      Resource:
+        - arn:aws:execute-api:*:*:**/@connections/*
+    - Effect: Allow
+      Action:
         - dynamodb:DescribeTable
         - dynamodb:Query
         - dynamodb:Scan
@@ -27,13 +32,18 @@ provider:
     SQS_BASE_URL: ${env:SQS_BASE_URL}
     TEST_QUEUE_NAME: ${self:service}-${self:provider.stage}
     IMAGES_DYNAMODB_TABLE: images-${self:service}-${self:provider.stage}
+    CONNECTIONS_DYNAMODB_TABLE: connections-${self:service}-${self:provider.stage}
     PIXABAY_API_KEY: ${env:PIXABAY_API_KEY}
+    WEBSOCKET_API_GATEWAY_URL: ${env:WEBSOCKET_API_GATEWAY_URL}
+  websocketApiName: ${self:service.name}-${self:provider.stage}
+  websocketApiRouteSelectionExpression: $request.body.action
 
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-dynamodb-local
+  - serverless-websockets-plugin
 
 custom:
   dynamodb:
@@ -79,6 +89,18 @@ functions:
             Fn::GetAtt:
               - SpikeServerlessFrameworkImagesTable
               - StreamArn
+  websocketConnectionManager:
+    handler: src/functions/websocket/connectionManager.index
+    events:
+      - websocket:
+          routeKey: $connect
+      - websocket:
+          routeKey: $disconnect
+  websocketDefaultHandler:
+    handler: src/functions/websocket/defaultHandler.index
+    events:
+      - websocket:
+          routeKey: $default
 
 resources:
   Resources:
@@ -99,5 +121,22 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    SpikeServerlessFrameworkConnectionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CONNECTIONS_DYNAMODB_TABLE}
+        AttributeDefinitions:
+          - AttributeName: ConnectionId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ConnectionId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        SSESpecification:
+          SSEEnabled: True
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
