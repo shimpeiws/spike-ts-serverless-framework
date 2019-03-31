@@ -11,6 +11,9 @@ export const index: Handler = async (
   await SQS.sendMessage(queueName, JSON.parse(event.body).message, event.isOffline);
   const response = {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     body: JSON.stringify({
       message: 'Put To Sqs Success!'
     })
