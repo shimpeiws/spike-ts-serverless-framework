@@ -1,4 +1,5 @@
 import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
+import { hello } from '../services/hello_service';
 
 export const index: Handler = async (
   event: APIGatewayEvent,
@@ -8,7 +9,7 @@ export const index: Handler = async (
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
+      message: hello(),
       input: event
     })
   };
