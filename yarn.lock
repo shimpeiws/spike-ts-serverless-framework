@@ -312,10 +312,10 @@
   resolved "https://registry.yarnpkg.com/@types/aws-lambda-mock-context/-/aws-lambda-mock-context-1.0.3.tgz#a4ee9327cb09ee72c0eccd69f7537613dbf5e48e"
   integrity sha512-sm90GfQjzvTFtfJFA04wHpbJxWD5RslEmUMZH1asRPWKBOQonmvq7ixAJXLyC8BZu2YhVDHAPC8TVNPdQZfEnw==
 
-"@types/aws-lambda@^8.10.17":
-  version "8.10.19"
-  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.19.tgz#913a8016a4599d262960d97cb11faf7e963ec0e1"
-  integrity sha512-dEhQow/1awGGIf/unEpb97vsTtnQ3qRPAhSmZZcXKzs4nOVbIuWo5LCCzOYdSIkGkkoFXVvc8pBaSVKRYIFUBA==
+"@types/aws-lambda@^8.10.23":
+  version "8.10.23"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.23.tgz#ab90be8ee3d8796b35df0acef5d17d71c8928d97"
+  integrity sha512-erfexxfuc1+T7b4OswooKwpIjpdgEOVz6ZrDDWSR+3v7Kjhs4EVowfUkF9KuLKhpcjz+VVHQ/pWIl7zSVbKbFQ==
 
 "@types/aws-sdk@^2.7.0":
   version "2.7.0"

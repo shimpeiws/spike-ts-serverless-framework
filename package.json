@@ -13,7 +13,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.17",
+    "@types/aws-lambda": "^8.10.23",
     "@types/aws-lambda-mock-context": "^1.0.3",
     "@types/aws-sdk": "^2.7.0",
     "@types/axios": "^0.14.0",
