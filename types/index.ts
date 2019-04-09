@@ -1,4 +1,4 @@
-import { APIGatewayEvent } from 'aws-lambda';
+import { APIGatewayEvent, SQSEvent } from 'aws-lambda';
 
 export interface LambdaResponse {
   statusCode: number;
@@ -8,5 +8,5 @@ export interface LambdaResponse {
 
 export interface LambdaResponseBody {
   message: string;
-  input?: APIGatewayEvent;
+  input?: APIGatewayEvent | SQSEvent;
 }

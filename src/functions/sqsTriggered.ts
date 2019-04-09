@@ -1,19 +1,24 @@
 import { Callback, Context, SQSHandler, ServerlessSQSEvent } from 'aws-lambda';
 import SearchPixabay from '../lib/SearchPixabay';
+import { success, invalidParameter } from '../functions/responses';
 
 export const index: SQSHandler = async (
   event: ServerlessSQSEvent,
   _context: Context,
   callback: Callback
 ) => {
+  if (!event.Records || !event.Records[0].body) {
+    invalidParameter(callback);
+    return;
+  }
   const query = event.Records[0].body;
-  await SearchPixabay.search(query, event.isOffline);
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
+  try {
+    await SearchPixabay.search(query, event.isOffline);
+    success(callback, {
       message: 'SQS Triggered',
       input: event
-    })
-  };
-  callback(null, response);
+    });
+  } catch (error) {
+    invalidParameter(callback);
+  }
 };
