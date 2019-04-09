@@ -33,3 +33,20 @@ test('putToSqs handler', async () => {
   };
   await index({ isOffline: true, body: JSON.stringify({ message: queueMessage }) }, ctx, callback);
 });
+
+test('putToSqs handler', async () => {
+  const queueMessage = '';
+
+  const callback = async (error, response) => {
+    expect(error).toBe(null);
+    expect(response.statusCode).toBe(422);
+    const responseBody = JSON.parse(response.body);
+    expect(responseBody.message).toBe('Invalid parameter');
+    try {
+      await SQS.receiveMessage(process.env.TEST_QUEUE_NAME, true);
+    } catch (e) {
+      expect(e).not.toBe(null);
+    }
+  };
+  await index({ isOffline: true, body: JSON.stringify({ message: queueMessage }) }, ctx, callback);
+});
