@@ -27,9 +27,11 @@ test('putToSqs handler', async () => {
     expect(response.statusCode).toBe(200);
     const responseBody = JSON.parse(response.body);
     expect(responseBody.message).toBe('Put To Sqs Success!');
-    const receive = await SQS.receiveMessage(process.env.TEST_QUEUE_NAME, true);
-    expect(receive.Messages.length).toBe(1);
-    expect(receive.Messages[0].Body).toBe(queueMessage);
+    setTimeout(async () => {
+      const receive = await SQS.receiveMessage(process.env.TEST_QUEUE_NAME, true);
+      expect(receive.Messages.length).toBe(1);
+      expect(receive.Messages[0].Body).toBe(queueMessage);
+    }, 1000);
   };
   await index({ isOffline: true, body: JSON.stringify({ message: queueMessage }) }, ctx, callback);
 });
