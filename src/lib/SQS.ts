@@ -1,4 +1,5 @@
 import { SQS as AwsSqs, SQSExtended } from 'aws-sdk';
+import { ReceiveMessageRequest } from 'aws-sdk/clients/sqs';
 
 export default class SQS {
   static get LOCAL_ENDPOINT() {
@@ -32,6 +33,15 @@ export default class SQS {
     const client = this.client(isOffline);
     return client.createQueue({ QueueName: queueName }).promise();
   }
+
+  static deleteQueue(queueName: string, isOffline: boolean = false): Promise<any> {
+    const client = this.client(isOffline);
+    const params: AwsSqs.DeleteQueueRequest = {
+      QueueUrl: this.queueUrl(queueName, isOffline)
+    };
+    return client.deleteQueue(params).promise();
+  }
+
   static sendMessage(
     queueName: string,
     messageBody: string,
@@ -43,5 +53,21 @@ export default class SQS {
       MessageBody: messageBody
     };
     return client.sendMessage(params).promise();
+  }
+
+  static async receiveMessage(
+    queueName: string,
+    isOffline: boolean = false
+  ): Promise<AwsSqs.ReceiveMessageResult> {
+    const client = this.client(isOffline);
+    const params: ReceiveMessageRequest = {
+      QueueUrl: this.queueUrl(queueName, isOffline)
+    };
+    try {
+      const res = await client.receiveMessage(params).promise();
+      return res;
+    } catch (e) {
+      return e;
+    }
   }
 }
