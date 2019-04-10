@@ -1,6 +1,6 @@
 import { ServerlessSQSEvent } from 'aws-lambda';
 import { index } from '../../src/functions/sqsTriggered';
-import SearchPixabay from '../../src/lib/SearchPixabay';
+import SearchPixabay from '../../src/services/SearchPixabay';
 import { mockSqsEvent } from '../helpers/sqsEvent';
 
 const context = require('aws-lambda-mock-context');
@@ -13,7 +13,7 @@ const mockPixabaySearch = () => {
   SearchPixabay.search = mockSearch.bind(SearchPixabay);
 };
 
-test('sqsTriggered handler', async () => {
+test('sqsTriggered handler with message', async () => {
   mockPixabaySearch();
   const callback = async (error, response) => {
     expect(error).toBe(null);
@@ -25,7 +25,7 @@ test('sqsTriggered handler', async () => {
   await index(event, ctx, callback);
 });
 
-test('sqsTriggered handler', async () => {
+test('sqsTriggered handler without message', async () => {
   mockPixabaySearch();
   const callback = async (error, response) => {
     expect(error).toBe(null);
