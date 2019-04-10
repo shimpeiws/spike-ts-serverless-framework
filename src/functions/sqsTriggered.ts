@@ -1,5 +1,5 @@
 import { Callback, Context, SQSHandler, ServerlessSQSEvent } from 'aws-lambda';
-import SearchPixabay from '../lib/SearchPixabay';
+import SearchPixabay from '../services/SearchPixabay';
 import { success, invalidParameter } from '../functions/responses';
 
 export const index: SQSHandler = async (

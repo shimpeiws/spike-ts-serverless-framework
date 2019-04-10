@@ -3,7 +3,7 @@ import axios from 'axios';
 import DynamoDB from '../lib/DynamoDB';
 
 export default class SearchPixabay {
-  static async search(query: String, isOffline: boolean = false) {
+  static async searchPixabay(query: string): [string] {
     const client = axios.create({
       baseURL: 'https://pixabay.com/api',
       headers: {
@@ -19,10 +19,13 @@ export default class SearchPixabay {
       }
     });
     if (!res.data || !res.data.hits) {
-      return;
+      return [];
     }
     const sliced = res.data.hits.slice(0, 9);
-    const urls = sliced.map(obj => obj.webformatURL);
+    return sliced.map(obj => obj.webformatURL);
+  }
+  static async search(query: String, isOffline: boolean = false) {
+    const urls = this.searchPixabay(query);
 
     const dynamo = DynamoDB.client(isOffline);
     const timestamp = new Date().getTime();
