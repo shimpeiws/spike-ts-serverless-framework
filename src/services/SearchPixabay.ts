@@ -1,9 +1,10 @@
 import { v1 } from 'uuid';
 import axios from 'axios';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import DynamoDB from '../lib/DynamoDB';
 
 export default class SearchPixabay {
-  static async search(query: String, isOffline: boolean = false) {
+  static async searchPixabay(query: string): Promise<string[]> {
     const client = axios.create({
       baseURL: 'https://pixabay.com/api',
       headers: {
@@ -19,10 +20,17 @@ export default class SearchPixabay {
       }
     });
     if (!res.data || !res.data.hits) {
-      return;
+      return [];
     }
     const sliced = res.data.hits.slice(0, 9);
-    const urls = sliced.map(obj => obj.webformatURL);
+    return sliced.map(obj => obj.webformatURL);
+  }
+
+  static async search(
+    query: string,
+    isOffline: boolean = false
+  ): Promise<DocumentClient.PutItemOutput | never> {
+    const urls = this.searchPixabay(query);
 
     const dynamo = DynamoDB.client(isOffline);
     const timestamp = new Date().getTime();
@@ -36,12 +44,6 @@ export default class SearchPixabay {
         updatedAt: timestamp
       }
     };
-    try {
-      await dynamo.put(params).promise();
-      return;
-    } catch (error) {
-      console.info('error', error);
-      return;
-    }
+    return await dynamo.put(params).promise();
   }
 }
