@@ -43,7 +43,6 @@ plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-dynamodb-local
-  - serverless-websockets-plugin
 
 custom:
   dynamodb:
@@ -93,14 +92,14 @@ functions:
     handler: src/functions/websocket/connectionManager.index
     events:
       - websocket:
-          routeKey: $connect
+          route: $connect
       - websocket:
-          routeKey: $disconnect
+          route: $disconnect
   websocketDefaultHandler:
     handler: src/functions/websocket/defaultHandler.index
     events:
       - websocket:
-          routeKey: $default
+          route: $default
 
 resources:
   Resources:
