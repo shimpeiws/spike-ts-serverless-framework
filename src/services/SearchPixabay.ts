@@ -30,7 +30,7 @@ export default class SearchPixabay {
     query: string,
     isOffline: boolean = false
   ): Promise<DocumentClient.PutItemOutput | never> {
-    const urls = this.searchPixabay(query);
+    const urls = await this.searchPixabay(query);
 
     const dynamo = DynamoDB.client(isOffline);
     const timestamp = new Date().getTime();
